@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MISIÓN CIBERSEGURIDAD: ¡Detectives de Internet!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<div class="container">
+    <!-- TOP HUD (HEADER) -->
+    <header id="hud" class="hud-header hidden">
+        <div>
+            <div id="hud-agent" class="hud-card brand-font text-cyan">🕵️ AGENTE: <span id="agent-name">---</span></div>
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <div class="hud-card">🎯 PUNTOS: <span id="hud-score" class="brand-font text-green">0</span> / 100</div>
+            <div class="hud-card">⏳ TIEMPO: <span id="hud-timer" role="timer" aria-live="off">40:00</span></div>
+        </div>
+        <div style="width: 100%;">
+            <div class="progress-bar-container">
+                <div id="hud-progress" class="progress-bar"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- SCREEN 0: WELCOME -->
+    <section id="screen-welcome" class="welcome-hero">
+        <div style="font-size: 3rem; margin-bottom: 10px;">🕵️</div>
+        <h1>🕵️ ¡PREPARÁ TU MISIÓN, DETECTIVE!</h1>
+        <h2 class="text-cyan" style="font-size: 1.2rem; margin-bottom: 15px;">MISIÓN CIBERSEGURIDAD: ¡DETECTIVES DE INTERNET!</h2>
+        <p style="color: var(--text-muted); max-width: 650px; margin: 0 auto; line-height: 1.5;">
+            "¡Bienvenido a la Misión Ciberseguridad! Antes de comenzar tu aventura, necesitamos saber cómo te llamás para personalizar tu experiencia y preparar tu diploma".
+        </p>
+
+        <!-- STUDENT IDENTIFICATION FORM -->
+        <form id="student-id-form" onsubmit="handleStartMission(event)" class="id-form-box">
+            <h3 class="text-cyan" style="font-size: 1rem; margin-bottom: 10px;">📋 DATOS DEL DETECTIVE (OBLIGATORIOS)</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="student-name">Nombre *</label>
+                    <input type="text" id="student-name" placeholder="Ej: Juan" autocomplete="given-name" maxlength="40" required>
+                </div>
+                <div class="form-group">
+                    <label for="student-lastname">Apellido *</label>
+                    <input type="text" id="student-lastname" placeholder="Ej: Pérez" autocomplete="family-name" maxlength="50" required>
+                </div>
+            </div>
+            <div id="id-error-msg" class="input-error-msg">⚠️ Por favor, ingresá un nombre y apellido válidos antes de continuar.</div>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 10px;">
+                🔒 <em>Tus datos se usan únicamente para personalizar tu diploma en la pantalla y no se guardan ni envían a servidores externos.</em>
+            </p>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <button type="submit" class="btn" style="font-size: 1.1rem; padding: 14px 28px;">🚀 COMENZAR MI MISIÓN</button>
+            </div>
+        </form>
+
+        <div class="info-grid">
+            <div class="info-card">
+                <span>🎂</span>
+                <strong>Edad</strong>
+                <p>11 y 12 años</p>
+            </div>
+            <div class="info-card">
+                <span>⏱️</span>
+                <strong>Duración</strong>
+                <p>40 minutos</p>
+            </div>
+            <div class="info-card">
+                <span>🧩</span>
+                <strong>Desafíos</strong>
+                <p>4 etapas digitales</p>
+            </div>
+            <div class="info-card">
+                <span>🏆</span>
+                <strong>Meta</strong>
+                <p>100 Puntos máx.</p>
+            </div>
+        </div>
+
+        <div style="background: rgba(15, 23, 42, 0.4); padding: 15px; border-radius: 10px; margin-bottom: 20px; text-align: left; font-size: 0.9rem;">
+            <strong>📋 Reglas de la Misión:</strong>
+            <ol style="margin-left: 20px; margin-top: 5px; color: var(--text-muted);">
+                <li>Leer atentamente cada situación.</li>
+                <li>Analizar las posibles respuestas.</li>
+                <li>Elegir la opción más segura.</li>
+                <li>Leer las explicaciones para aprender de cada caso.</li>
+                <li>Completar los 4 desafíos para obtener tu diploma.</li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- SCREEN 1: CHALLENGE 1 (CONTRASEÑA SECRETA) -->
+    <section id="screen-ch1" class="challenge-box hidden">
+        <div id="welcome-banner" style="background: rgba(6, 182, 212, 0.15); border: 1px solid var(--primary-cyan); padding: 12px 15px; border-radius: 10px; margin-bottom: 20px; font-size: 0.95rem;">
+            <!-- Custom welcome greeting injected here -->
+        </div>
+
+        <span class="badge-title">DESAFÍO 1 DE 4 • 7 MINUTOS</span>
+        <h2 class="text-cyan">🔐 La Contraseña Secreta</h2>
+        <p style="color: var(--text-muted); margin-bottom: 20px;">
+            Los detectives digitales necesitan proteger sus cuentas. Investigá cuáles son las mejores prácticas para crear contraseñas seguras.
+        </p>
+
+        <!-- Q1 -->
+        <div class="question-card">
+            <h3>1. ¿Cuál de estas contraseñas es la más segura?</h3>
+            <div class="options-grid" id="ch1-q1-opts">
+                <button class="option-btn" onclick="answerCh1(1, 'A', this)">A) 12345678</button>
+                <button class="option-btn" onclick="answerCh1(1, 'B', this)">B) martin2014</button>
+                <button class="option-btn" onclick="answerCh1(1, 'C', this)">C) Rio!Nube47Tren</button>
+            </div>
+            <div id="ch1-q1-fb" class="feedback-box hidden"></div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="question-card">
+            <h3>2. ¿Qué deberías hacer con tu contraseña?</h3>
+            <div class="options-grid" id="ch1-q2-opts">
+                <button class="option-btn" onclick="answerCh1(2, 'A', this)">A) Compartirla con mis mejores amigos.</button>
+                <button class="option-btn" onclick="answerCh1(2, 'B', this)">B) Mantenerla en secreto y usar contraseñas diferentes en cuentas importantes.</button>
+                <button class="option-btn" onclick="answerCh1(2, 'C', this)">C) Usar mi fecha de nacimiento para recordarla.</button>
+            </div>
+            <div id="ch1-q2-fb" class="feedback-box hidden"></div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="question-card">
+            <h3>3. ¿Qué ayuda a proteger una cuenta además de la contraseña?</h3>
+            <div class="options-grid" id="ch1-q3-opts">
+                <button class="option-btn" onclick="answerCh1(3, 'A', this)">A) La verificación en dos pasos (2FA).</button>
+                <button class="option-btn" onclick="answerCh1(3, 'B', this)">B) Publicar la contraseña en un grupo privado.</button>
+                <button class="option-btn" onclick="answerCh1(3, 'C', this)">C) Usar siempre la misma contraseña.</button>
+            </div>
+            <div id="ch1-q3-fb" class="feedback-box hidden"></div>
+        </div>
+
+        <!-- Practical Activity: Password Generator -->
+        <div class="generator-box">
+            <h3 class="text-purple">🛠️ Laboratorio Práctico: Creador de Contraseñas Ficticias</h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">
+                Crea una contraseña segura combinando criterios. <em>¡Nunca uses datos reales ni reutilices estas claves ficticias!</em>
+            </p>
+
+            <div class="pass-display" id="generated-pass">--------</div>
+
+            <div class="controls-grid">
+                <label class="control-item"><input type="checkbox" id="chk-upper" checked onchange="updatePass()"> Mayúsculas (A-Z)</label>
+                <label class="control-item"><input type="checkbox" id="chk-lower" checked onchange="updatePass()"> Minúsculas (a-z)</label>
+                <label class="control-item"><input type="checkbox" id="chk-num" checked onchange="updatePass()"> Números (0-9)</label>
+                <label class="control-item"><input type="checkbox" id="chk-sym" checked onchange="updatePass()"> Símbolos (!@#)</label>
+            </div>
+
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                <label style="font-size: 0.85rem;">Largo: <span id="len-val">12</span> caracteres</label>
+                <input type="range" id="chk-len" min="6" max="20" value="12" style="flex:1;" oninput="document.getElementById('len-val').innerText=this.value; updatePass();">
+                <button class="btn btn-secondary" onclick="updatePass()">⚡ Generar</button>
+            </div>
+
+            <div id="pass-eval-fb" class="feedback-box info" style="margin-top: 15px;">
+                Configura la clave para incluir Mayúsculas, Minúsculas, Números, Símbolos y al menos 10 caracteres para obtener los 10 puntos de práctica.
+            </div>
+        </div>
+
+        <div class="nav-footer">
+            <button class="btn btn-secondary" onclick="confirmReset()">🏠 Inicio</button>
+            <button class="btn" id="btn-next-ch1" onclick="nextChallenge(2)">Siguiente Desafío ➡️</button>
+        </div>
+    </section>
+
+    <!-- SCREEN 2: CHALLENGE 2 (CAZADORES DE ESTAFAS) -->
+    <section id="screen-ch2" class="challenge-box hidden">
+        <span class="badge-title">DESAFÍO 2 DE 4 • 8 MINUTOS</span>
+        <h2 class="text-cyan">🎣 Cazadores de Estafas</h2>
+        <p style="color: var(--text-muted); margin-bottom: 20px;">
+            Los ciberdelincuentes utilizan mensajes engañosos para robar información. Tu trabajo es descubrir cuáles son sospechosos y explicar por qué.
+        </p>
+
+        <!-- Case 1 -->
+        <div class="question-card">
+            <h3>Caso 1</h3>
+            <div class="phish-card">
+                📩 <strong>Mensaje recibido:</strong><br>
+                "¡FELICIDADES! Ganaste un celular. Entrá en este enlace en los próximos 5 minutos y escribí tu contraseña para reclamarlo."
+            </div>
+            <p><strong>¿Cómo clasificás este mensaje?</strong></p>
+            <div class="options-grid" style="flex-direction: row; flex-wrap: wrap; margin-bottom: 15px;">
+                <button class="option-btn" style="flex:1" onclick="selectPhish(1, 'seguro', this)">✅ Seguro</button>
+                <button class="option-btn" style="flex:1" onclick="selectPhish(1, 'sospechoso', this)">🚨 Sospechoso</button>
+                <button class="option-btn" style="flex:1" onclick="selectPhish(1, 'verificar', this)">🔍 Necesita Verificación</button>
+            </div>
+            <label style="font-size: 0.85rem; color: var(--text-muted);">Explicá las señales de alerta o qué harías (opcional para puntos extra):</label>
+            <input type="text" id="ch2-exp-1" placeholder="Ej: Pide contraseña, da poco tiempo, promete regalo...">
+            <button class="btn btn-secondary" style="margin-top: 10px;" onclick="checkPhishCase(1)">Comprobar Caso 1</button>
+            <div id="ch2-fb-1" class="feedback-box hidden"></div>
+        </div>
+
+        <!-- Case 2 -->
+        <div class="question-card">
+            <h3>Caso 2</h3>
+            <div class="phish-card">
+                📩 <strong>Mensaje recibido:</strong><br>
+                "La escuela te informa que mañana no habrá clases. Revisá el aviso en la plataforma oficial que usás habitualmente."
+            </div>
+            <p><strong>¿Cómo clasificás este mensaje?</strong></p>
+            <div class="options-grid" style="flex-direction: row; flex-wrap: wrap; margin-bottom: 15px;">
+                <button class="option-btn" style="flex:1" onclick="selectPhish(2, 'seguro', this)">✅ Seguro</button>
+                <button class="option-btn" style="flex:1" onclick="selectPhish(2, 'sospechoso', this)">🚨 Sospechoso</button>
+                <button class="option-btn" style="flex:1" onclick="selectPhish(2, 'verificar', this)">🔍 Necesita Verificación</button>
+            </div>
+            <label style="font-size: 0.85rem; color: var(--text-muted);">Explicá cómo actuarías de forma segura:</label>
+            <input type="text" id="ch2-exp-2" placeholder="Ej: Entrar directo a la plataforma o preguntar a un docente...">
+            <button class="btn btn-secondary" style="margin-top: 10px;" onclick="checkPhishCase(2)">Comprobar Caso 2</button>
+            <div id="ch2-fb-2" class="feedback-box hidden"></div>
+        </div>
+
+        <!-- Case 3 -->
+        <div class="question-card">
+            <h3>Caso 3</h3>
+            <div class="phish-card">
+                📩 <strong>Mensaje recibido:</strong><br>
+                "Un jugador que acabás de conocer te ofrece monedas gratis si le mandás el código que llegó a tu celular."
+            </div>
+            <p><strong>¿Cómo clasificás este mensaje?</strong></p>
+            <div class="options-grid" style="flex-direction: row; flex-wrap: wrap; margin-bottom: 15px;">
+                <button class="option-btn" style="flex:1" onclick="selectPhish(3, 'seguro', this)">✅ Seguro</button>
+                <button class="option-btn" style="flex:1" onclick="selectPhish(3, 'sospechoso', this)">🚨 Sospechoso</button>
+                <button class="option-btn" style="flex:1" onclick="selectPhish(3, 'verificar', this)">🔍 Necesita Verificación</button>
+            </div>
+            <label style="font-size: 0.85rem; color: var(--text-muted);">Explicá la señal de alerta:</label>
+            <input type="text" id="ch2-exp-3" placeholder="Ej: Pide un código privado a cambio de monedas gratis...">
+            <button class="btn btn-secondary" style="margin-top: 10px;" onclick="checkPhishCase(3)">Comprobar Caso 3</button>
+            <div id="ch2-fb-3" class="feedback-box hidden"></div>
+        </div>
+
+        <div class="nav-footer">
+            <button class="btn btn-secondary" onclick="confirmReset()">🏠 Inicio</button>
+            <button class="btn" id="btn-next-ch2" onclick="nextChallenge(3)">Siguiente Desafío ➡️</button>
+        </div>
+    </section>
+
+    <!-- SCREEN 3: CHALLENGE 3 (PROTEGER LA IDENTIDAD DIGITAL) -->
+    <section id="screen-ch3" class="challenge-box hidden">
+        <span class="badge-title">DESAFÍO 3 DE 4 • 8 MINUTOS</span>
+        <h2 class="text-cyan">🆔 Proteger la Identidad Digital</h2>
+        <p style="color: var(--text-muted); margin-bottom: 15px;">
+            Tu identidad digital se construye con la información que compartís en Internet. Algunas cosas pueden compartirse con cuidado; otras deben mantenerse privadas porque pueden revelar quién sos, dónde vivís o permitir que alguien acceda a tus cuentas.
+        </p>
+
+        <div class="info-card" style="margin-bottom:14px; line-height:1.5;">
+            <strong>🎯 Tu misión:</strong> seleccioná una tarjeta y después tocá la categoría donde corresponde. Podés cambiar una tarjeta de lugar antes de comprobar. Clasificá las 6 tarjetas.
+        </div>
+        <p id="ch3-selection-status" class="ch3-status" role="status" aria-live="polite">No hay ninguna tarjeta seleccionada. Elegí una para comenzar.</p>
+        <p id="ch3-placement-count" class="ch3-count">Tarjetas clasificadas: 0 de 6</p>
+
+        <div class="drag-items" id="items-pool" aria-label="Tarjetas para clasificar">
+            <button type="button" class="drag-item" id="item-1" onclick="selectItem('item-1', event)" aria-pressed="false">🔑 Mi contraseña</button>
+            <button type="button" class="drag-item" id="item-2" onclick="selectItem('item-2', event)" aria-pressed="false">🏠 Mi dirección de casa</button>
+            <button type="button" class="drag-item" id="item-3" onclick="selectItem('item-3', event)" aria-pressed="false">🎮 Mi videojuego favorito</button>
+            <button type="button" class="drag-item" id="item-4" onclick="selectItem('item-4', event)" aria-pressed="false">📲 Código de verificación del celular</button>
+            <button type="button" class="drag-item" id="item-5" onclick="selectItem('item-5', event)" aria-pressed="false">🏫 Foto donde se ve el uniforme de mi escuela</button>
+            <button type="button" class="drag-item" id="item-6" onclick="selectItem('item-6', event)" aria-pressed="false">🎨 Un dibujo propio sin datos personales</button>
+        </div>
+
+        <div class="dnd-container">
+            <div class="drop-zone share" role="group" aria-label="Puedo compartirlo con cuidado" onclick="placeSelectedItem('share')">
+                <h4 class="text-green">🟢 PUEDO COMPARTIRLO CON CUIDADO</h4>
+                <p class="zone-hint">Siempre con permiso de un adulto y sin revelar datos personales.</p>
+                <div id="zone-share" class="zone-items"></div>
+            </div>
+
+            <div class="drop-zone protect" role="group" aria-label="Debo protegerlo" onclick="placeSelectedItem('protect')">
+                <h4 style="color: var(--accent-red);">🔴 DEBO PROTEGERLO</h4>
+                <p class="zone-hint">No lo publiques ni se lo envíes a desconocidos.</p>
+                <div id="zone-protect" class="zone-items"></div>
+            </div>
+        </div>
+
+        <button class="btn btn-secondary" id="btn-evaluate-ch3" style="margin-top: 15px;" onclick="evaluateCh3()">Comprobar clasificación</button>
+        <div id="ch3-fb" class="feedback-box hidden" role="status" aria-live="polite"></div>
+
+        <div class="question-card" style="margin-top: 20px;">
+            <h3>Pregunta final de reflexión</h3>
+            <p style="font-size: 0.9rem; margin-bottom: 8px;">¿Por qué es importante proteger nuestros datos personales en Internet?</p>
+            <input type="text" id="ch3-reflection" maxlength="220" placeholder="Escribí tu respuesta con tus propias palabras..." aria-label="Tu reflexión sobre la protección de datos personales">
+            <button class="btn btn-secondary" style="margin-top: 10px;" onclick="checkCh3Reflection()">Guardar reflexión (+1 punto)</button>
+            <div id="ch3-ref-fb" class="feedback-box hidden" role="status" aria-live="polite"></div>
+        </div>
+
+        <div class="nav-footer">
+            <button class="btn btn-secondary" onclick="confirmReset()">🏠 Inicio</button>
+            <button class="btn" id="btn-next-ch3" onclick="nextChallenge(4)">Siguiente desafío ➡️</button>
+        </div>
+    </section>
+
+    <!-- SCREEN 4: CHALLENGE 4 (ALERTA EN EL CHAT) -->
+    <section id="screen-ch4" class="challenge-box hidden">
+        <span class="badge-title">DESAFÍO 4 DE 4 • 7 MINUTOS</span>
+        <h2 class="text-cyan">💬 ¡Alerta en el Chat!</h2>
+        <p style="color: var(--text-muted); margin-bottom: 20px;">
+            Situación ficticia: Analizá la conversación simulada y toma la decisión más segura.
+        </p>
+
+        <!-- Simulated Chat -->
+        <div class="chat-sim">
+            <div class="chat-msg">
+                <div class="chat-sender">👤 Desconocido_Gamer15</div>
+                "Hola, soy un jugador de 15 años. Mandame una foto tuya y decime a qué escuela vas. No le cuentes a nadie porque es nuestro secreto."
+            </div>
+        </div>
+
+        <div class="question-card">
+            <h3>¿Qué harías ante esta situación?</h3>
+            <div class="options-grid" id="ch4-q1-opts">
+                <button class="option-btn" onclick="answerCh4Main('A', this)">A) Mandar una foto, pero no decir la dirección.</button>
+                <button class="option-btn" onclick="answerCh4Main('B', this)">B) Bloquear al usuario, denunciar el mensaje y contárselo a un adulto de confianza.</button>
+                <button class="option-btn" onclick="answerCh4Main('C', this)">C) Seguir hablando para averiguar quién es.</button>
+                <button class="option-btn" onclick="answerCh4Main('D', this)">D) Darle información falsa y continuar la conversación.</button>
+            </div>
+            <div id="ch4-q1-fb" class="feedback-box hidden"></div>
+        </div>
+
+        <!-- Complementary Practice -->
+        <div class="question-card">
+            <h3>Situación de Refuerzo:</h3>
+            <p style="font-size: 0.9rem; margin-bottom: 10px;">
+                "Una persona desconocida en un videojuego te dice que conoce tu escuela y te pide que te encuentres con ella en una plaza."
+            </p>
+
+            <div class="options-grid" id="ch4-q2-opts">
+                <button class="option-btn" onclick="answerCh4Extra('A', this)">A) Ir al encuentro para descubrir quién es.</button>
+                <button class="option-btn" onclick="answerCh4Extra('B', this)">B) Compartir más información para comprobar si dice la verdad.</button>
+                <button class="option-btn" onclick="answerCh4Extra('C', this)">C) No acudir, cortar el contacto y contárselo a un adulto de confianza.</button>
+                <button class="option-btn" onclick="answerCh4Extra('D', this)">D) Pedirle que guarde el secreto.</button>
+            </div>
+            <div id="ch4-q2-fb" class="feedback-box hidden"></div>
+        </div>
+
+        <div class="nav-footer">
+            <button class="btn btn-secondary" onclick="confirmReset()">🏠 Inicio</button>
+            <button class="btn" id="btn-next-ch4" onclick="nextChallenge('rules')">Código Final ➡️</button>
+        </div>
+    </section>
+
+    <!-- SCREEN 5: FINAL CODE & RULES -->
+    <section id="screen-rules" class="challenge-box hidden">
+        <span class="badge-title">ETAPA FINAL</span>
+        <h2 class="text-purple">📜 CÓDIGO FINAL DE LOS DETECTIVES</h2>
+        <p style="color: var(--text-muted); margin-bottom: 15px;">
+            Para completar oficialmente la misión, debes revisar y confirmar las cuatro reglas fundamentales de ciberseguridad:
+        </p>
+
+        <div class="rules-list">
+            <label class="rule-item">
+                <input type="checkbox" id="rule-1" onchange="checkRulesState()">
+                <span>1. Crear contraseñas largas y únicas.</span>
+            </label>
+            <label class="rule-item">
+                <input type="checkbox" id="rule-2" onchange="checkRulesState()">
+                <span>2. Desconfiar de enlaces, premios y mensajes sospechosos.</span>
+            </label>
+            <label class="rule-item">
+                <input type="checkbox" id="rule-3" onchange="checkRulesState()">
+                <span>3. No compartir datos personales ni códigos de verificación.</span>
+            </label>
+            <label class="rule-item">
+                <input type="checkbox" id="rule-4" onchange="checkRulesState()">
+                <span>4. Bloquear, denunciar y pedir ayuda ante situaciones peligrosas.</span>
+            </label>
+        </div>
+
+        <div class="question-card">
+            <h3>Explicación personal:</h3>
+            <p id="rule-explanation-help" style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 8px;">Explicá con tus propias palabras al menos una de las cuatro reglas (mínimo 10 caracteres):</p>
+            <input type="text" id="rule-explanation" maxlength="240" placeholder="Escribí aquí tu explicación breve (mínimo 10 caracteres)..." aria-describedby="rule-explanation-help">
+        </div>
+
+        <div class="nav-footer">
+            <button class="btn btn-secondary" onclick="confirmReset()">🏠 Inicio</button>
+            <button class="btn btn-success" id="btn-finish-mission" onclick="finishMission()" disabled>🏆 COMPLETAR MISIÓN</button>
+        </div>
+    </section>
+
+    <!-- SCREEN 6: RESULTS & CERTIFICATE -->
+    <section id="screen-results" class="challenge-box hidden">
+        <div class="text-center" style="margin-bottom: 25px;">
+            <h1 class="text-cyan">🎉 ¡MISIÓN COMPLETADA!</h1>
+            <p style="color: var(--text-muted);">Has demostrado tus habilidades de investigación y protección digital.</p>
+        </div>
+
+        <!-- Summary -->
+        <div class="question-card">
+            <h3>📊 Resumen de Desempeño:</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin: 15px 0;">
+                <div class="info-card">Desafío 1: <strong id="res-ch1" class="text-cyan">0/25</strong></div>
+                <div class="info-card">Desafío 2: <strong id="res-ch2" class="text-cyan">0/25</strong></div>
+                <div class="info-card">Desafío 3: <strong id="res-ch3" class="text-cyan">0/25</strong></div>
+                <div class="info-card">Desafío 4: <strong id="res-ch4" class="text-cyan">0/25</strong></div>
+            </div>
+            <div style="text-align: center; margin-top: 15px;">
+                <h2 style="font-size: 1.5rem;">PUNTAJE TOTAL: <span id="res-total" class="text-green">0</span> / 100</h2>
+                <p id="res-rank" class="brand-font text-purple" style="font-size: 1.2rem; margin-top: 5px;">-</p>
+                <p id="res-msg" style="font-size: 0.9rem; color: var(--text-muted); margin-top: 8px;"></p>
+            </div>
+        </div>
+
+        <!-- CERTIFICATE FOR PRINTING -->
+        <div id="screen-certificate">
+            <div class="cert-card">
+                <div class="cert-badge">🛡️</div>
+                <h2>MISIÓN CIBERSEGURIDAD</h2>
+                <h3>¡DETECTIVES DE INTERNET!</h3>
+                <p style="font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px;">Diploma de Reconocimiento</p>
+                <p style="margin-top: 15px;">Se reconoce a:</p>
+                <div class="cert-name" id="cert-agent-name">Nombre y Apellido</div>
+                <p style="max-width: 600px; margin: 15px auto 0 auto; line-height: 1.4; font-size: 0.95rem;">
+                    por completar la misión y demostrar conocimientos para navegar de forma más segura, proteger su identidad digital y reconocer posibles riesgos en Internet.
+                </p>
+
+                <div class="cert-details">
+                    <div>Puntaje: <strong id="cert-score">0/100</strong></div>
+                    <div>Categoría: <strong id="cert-rank">Experto</strong></div>
+                    <div>Fecha: <strong id="cert-date">--/--/----</strong></div>
+                </div>
+
+                <div style="margin-top: 40px; border-top: 1px solid #ccc; padding-top: 10px; display: flex; justify-content: space-around;">
+                    <div>______________________<br><small>Firma del Docente / Guía</small></div>
+                    <div>______________________<br><small>Sello de Ciberseguridad</small></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-footer no-print">
+            <button class="btn btn-secondary" onclick="confirmReset()">🔄 Volver a Jugar</button>
+            <button class="btn btn-success" onclick="window.print()">🖨️ Imprimir Diploma / Guardar PDF</button>
+        </div>
+    </section>
+
+</div>
+
+    <script src="script.js"></script>
+</body>
+</html>
